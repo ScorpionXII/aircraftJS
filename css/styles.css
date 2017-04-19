@@ -1,0 +1,110 @@
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('../fonts/PressStart2P.eot');
+    src: url('../fonts/PressStart2P.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/PressStart2P.woff') format('woff'),
+        url('../fonts/PressStart2P.ttf') format('truetype'),
+        url('../fonts/PressStart2P.svg#PressStart2P') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+body {
+    padding: 0;
+    margin: 0;
+    transition: all 1s ease;
+    font-family: "Press Start 2P";
+}
+
+.wrapper {
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(0, -50%);
+    background-color: #385a8c;
+}
+
+.way-container {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.way {
+    position: relative;
+    float: left;
+    
+    top: 50%;
+    height: 100px;
+    width: 0.4%;
+    transform: translate(0, -50%);
+    background-color: #282828;
+    box-sizing: border-box;
+}
+
+.air-craft {
+    position: absolute;
+    top: 50%;
+    left: 150px;
+    width: 125px;
+    height: 89px;
+    background-image: url("../assets/plane-tile-helic02.png");
+    z-index: 10;
+    transform: translate(0, -50%);
+    /*transform: rotate(-20deg);*/
+}
+
+.air-craft-bg {
+    background-image: url("../assets/plane-tile-helic01.png");
+}
+
+.bounding-box {
+    position:absolute;
+    width: 80px;
+    height: 80px;
+    /*background-color: #ffffff;*/
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+}
+
+.stats {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: auto;
+    /*background-color: #FFFFFF;*/
+    border-radius: 5px;
+    transform: translate(-50%, 0);
+    color: #FFFFFF;
+}
+
+.obstacle {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    transform: translate(0, -50%);
+    background-position: center;
+    background-size: contain;
+}
+
+.js {
+    background-image: url("../assets/js.png");
+}
+
+.sass {
+    background-image: url("../assets/sass.png");
+}
+
+.html5 {
+    background-image: url("../assets/html5.png");
+}
+
+.css {
+    background-image: url("../assets/css.png");
+}
