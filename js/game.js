@@ -29,9 +29,9 @@ Game.prototype.addObstacle = function(obstacleObj){
     this.obstacles.push(obstacleObj);
 };
 
-Game.prototype.createObstacle = function(velocity){
+Game.prototype.createObstacle = function(obtacleDimension, velocity){
     var yPos = this.generateObstaclePosition(100);
-    var obstacle = new Obstacle(-200, yPos, velocity);
+    var obstacle = new Obstacle(-2*obstacleDimension, yPos, velocity);
     return obstacle;
 };
 

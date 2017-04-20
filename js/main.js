@@ -5,17 +5,17 @@ var intervalId = null;
 
 var fps = 1000/25; // Frames per Second: 1000ms / value : 1000/25 = 40fps
 
-var secondsBetweenObstacle = 1.2;
-var deltaObstaclesFPS = 0;
+var secondsBetweenObstacle = 1;
+var deltaObstaclesFPS = 0; //Calculated at checkToAddObstacle()
 
-var obstacleDimension = 0;
+var obstacleDimension = 0; //Initialized at init()
 
 function init(){
     var aircraft = new Aircraft($(".air-craft").position().top);
     var tunnel = new Tunnel($(document).height() / 2 - ($(document).height() * 0.8 / 2), $(document).height() * 0.8);
     game = new Game(aircraft, tunnel);
     
-    obstacleDimension = $(document).height() * 0.18;
+    obstacleDimension = $(document).height() * 0.15;
       
     renderInitialTunnel();   
     intervalId = setInterval(render, 1000/fps);
@@ -33,7 +33,8 @@ function render(){
 }
 
 function renderScore(){
-    $(".distance").html(game.getScoredPoints());
+    //$(".distance").html(game.getScoredPoints());
+    $(".distance").html(deltaObstaclesFPS);
 }
 
 function renderElements(){
@@ -68,7 +69,7 @@ function randomDivHeight(min, max){
 }
 
 function checkControls(){
-    if(keys[32])
+    if(keys[32] || keys["mouseDown"])
         game.aircraft.isFalling = false;
     else
         game.aircraft.isFalling = true;        
@@ -94,8 +95,8 @@ function removeOldObstacles(){
 }
 
 function checkToAddObstacle(){
-    if (deltaObstaclesFPS == 0){
-        var obstacleObject = game.createObstacle(10);
+    if (deltaObstaclesFPS <= 0){
+        var obstacleObject = game.createObstacle(obstacleDimension,10);
         game.addObstacle(obstacleObject);
     
         var obstacleContainer = $('<div class="obstacle '+ obstacleObject.name +'" style="top:'+ game.lastObstacle().y +'px; width:'+ obstacleDimension +'px; height:'+ obstacleDimension +'px;"></div>');
@@ -116,4 +117,10 @@ $(document).keydown(function(e){
     keys[e.keyCode] = true;
 }).keyup(function(e){
     delete keys[e.keyCode];
+});
+
+$(document).mousedown(function(e){
+    keys["mouseDown"] = true;
+}).mouseup(function(e){
+    delete keys["mouseDown"];
 });
