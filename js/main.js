@@ -3,7 +3,7 @@ var divObstaclesArray = [];
 var keys = {};
 var intervalId = null;
 
-var fps = 30; // Frames per Second
+var fps = 40; // Frames per Second
 
 var secondsBetweenObstacle = 1;
 var obstaclesTimeDelta = 0; //Calculated at checkToAddObstacle() related with time to deploy obstacle 
@@ -15,7 +15,7 @@ var documentHeight = 0;
 function init(){
     documentHeight = $(document).height();
     
-    var aircraft = new Aircraft($(".air-craft").position().top);
+    var aircraft = new Aircraft($("#air-craft").position().top);
     var tunnel = new Tunnel(documentHeight, 0.8);
     game = new Game(aircraft, tunnel);
     
@@ -27,7 +27,6 @@ function init(){
 
 function render(){
     if (!keys[8]){
-        checkCollisions();
         game.gameStep();
         checkControls();
         removeOldObstacles();
@@ -35,18 +34,19 @@ function render(){
         renderTunnel();
         renderElements();
         renderScore();
+        checkCollisions();
     }
 }
 
 function renderScore(){
-    $(".distance").html(game.getScoredPoints());
-    $(".distance").html(game.tunnel.tunnelTop);
+    $("#distance").html(game.getScoredPoints());
+    $("#distance").html(game.tunnel.tunnelTop);
     //$(".ppp").css("top", documentHeight/2 + game.tunnel.tunnelHeight/2);
 }
 
 function renderElements(){
     
-    $(".air-craft").css({"top" : game.aircraft.altitude, "transform" : "rotate(" + game.aircraft.rotation + "deg)"}).toggleClass("air-craft-bg");
+    $("#air-craft").css({"top" : game.aircraft.altitude, "transform" : "rotate(" + game.aircraft.rotation + "deg)"}).toggleClass("air-craft-bg");
     
     divObstaclesArray.forEach(function(thisDiv, index){
         thisDiv.css("right", game.obstacles[index].x);
@@ -56,7 +56,7 @@ function renderElements(){
 function renderInitialTunnel(){
     var numOfDivs = 250;
     for (var i = 0; i < numOfDivs; i++){
-        $(".way-container").append(createDivElementForTunnel());
+        $("#way-container").append(createDivElementForTunnel());
     }
 }
 
@@ -67,8 +67,8 @@ function createDivElementForTunnel(){
 }
 
 function renderTunnel(){
-    $('.way-container div:first-child').remove();
-    $('.way-container').append(createDivElementForTunnel());
+    $('#way-container div:first-child').remove();
+    $('#way-container').append(createDivElementForTunnel());
 }
 
 function randomDivHeight(min, max){
@@ -83,12 +83,12 @@ function checkControls(){
 }
 
 function checkCollisions(){
-    if ($(".bounding-box").collision(".obstacle").length >  0)
+    if ($("#bounding-box").collision(".obstacle").length >  0)
         clearInterval(intervalId);
         
-     var heightToCheck = $('.way-container div:first-child').height();   
+     var heightToCheck = $('#way-container div:first-child').height();   
      
-     if ($(".air-craft").position().top < (documentHeight/2 - heightToCheck/2) || $(".air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
+     if ($("#air-craft").position().top < (documentHeight/2 - heightToCheck/2) || $("#air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
         clearInterval(intervalId);
      }
 }
@@ -109,9 +109,9 @@ function checkToAddObstacle(){
         var obstacleContainer = $('<div class="obstacle '+ obstacleObject.name +'" style="top:'+ game.lastObstacle().y +'px; width:'+ obstacleDimension +'px; height:'+ obstacleDimension +'px;"></div>');
     
         divObstaclesArray.push(obstacleContainer);
-        $(".wrapper").append(obstacleContainer);
+        $("#game-wrapper").append(obstacleContainer);
         
-        obstaclesTimeDelta = secondsBetweenObstacle*1000/fps + obstacleDimension*0.05;
+        obstaclesTimeDelta = secondsBetweenObstacle*1000/fps + obstacleDimension/10;
     } else
         obstaclesTimeDelta--;
 }
