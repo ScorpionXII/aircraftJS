@@ -5,14 +5,18 @@ var intervalId = null;
 
 var fps = 1000/25; // Frames per Second: 1000ms / value : 1000/25 = 40fps
 
-var secondsBetweenObstacle = 1;
+var secondsBetweenObstacle = 1.2;
 var deltaObstaclesFPS = 0;
+
+var obstacleDimension = 0;
 
 function init(){
     var aircraft = new Aircraft($(".air-craft").position().top);
     var tunnel = new Tunnel($(document).height() / 2 - ($(document).height() * 0.8 / 2), $(document).height() * 0.8);
     game = new Game(aircraft, tunnel);
     
+    obstacleDimension = $(document).height() * 0.18;
+      
     renderInitialTunnel();   
     intervalId = setInterval(render, 1000/fps);
 }
@@ -94,7 +98,7 @@ function checkToAddObstacle(){
         var obstacleObject = game.createObstacle(10);
         game.addObstacle(obstacleObject);
     
-        var obstacleContainer = $('<div class="obstacle '+ obstacleObject.name +'" style="top:'+ game.lastObstacle().y +'px;"></div>');
+        var obstacleContainer = $('<div class="obstacle '+ obstacleObject.name +'" style="top:'+ game.lastObstacle().y +'px; width:'+ obstacleDimension +'px; height:'+ obstacleDimension +'px;"></div>');
     
         divObstaclesArray.push(obstacleContainer);
         $(".wrapper").append(obstacleContainer);
