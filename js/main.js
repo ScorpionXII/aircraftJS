@@ -12,7 +12,16 @@ var obstacleDimension = 0; //Initialized at init()
 
 var documentHeight = 0;
 
-function init(){
+function startMenuLoop(){
+    if (keys[32]) {
+        clearInterval(intervalId);
+        initGame();
+        $("#start-menu").hide();
+    }
+    $(".start-image").toggleClass('start-image-bg');
+}
+
+function initGame(){
     documentHeight = $(document).height();
     
     var aircraft = new Aircraft($("#air-craft").position().top);
@@ -88,7 +97,7 @@ function checkCollisions(){
         
      var heightToCheck = $('#way-container div:first-child').height();   
      
-     if ($("#air-craft").position().top < (documentHeight/2 - heightToCheck/2) || $("#air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
+     if ($("#air-craft").position().top < (documentHeight/2 - heightToCheck/2) - 10 || $("#air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
         clearInterval(intervalId);
      }
 }
@@ -117,7 +126,7 @@ function checkToAddObstacle(){
 }
 
 $(document).ready(function(){
-    init();
+    intervalId = setInterval(startMenuLoop, 1000/fps);
 });
 
 $(document).keydown(function(e){
