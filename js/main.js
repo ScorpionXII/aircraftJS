@@ -119,8 +119,6 @@ $(document).keydown(function(e){
     delete keys[e.keyCode];
 });
 
-$(document).mousedown(function(e){
-    keys["mouseDown"] = true;
-}).mouseup(function(e){
-    delete keys["mouseDown"];
-});
+$(document).on("touchstart", function(e){
+        keys["mouseDown"] = true;
+    });
