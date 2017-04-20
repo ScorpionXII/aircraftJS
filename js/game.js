@@ -29,9 +29,9 @@ Game.prototype.addObstacle = function(obstacleObj){
     this.obstacles.push(obstacleObj);
 };
 
-Game.prototype.createObstacle = function(obtacleDimension, velocity){
-    var yPos = this.generateObstaclePosition(100);
-    var obstacle = new Obstacle(-2*obstacleDimension, yPos, velocity);
+Game.prototype.createObstacle = function(dimension, velocity, screenHeight){
+    var yPos = this.generateObstaclePosition(dimension, screenHeight);
+    var obstacle = new Obstacle(-dimension, yPos, velocity);
     return obstacle;
 };
 
@@ -39,8 +39,8 @@ Game.prototype.removeObstacle = function(){
     this.obstacles.shift();
 };
 
-Game.prototype.generateObstaclePosition = function(marginFromTunnel){
-    return Math.random() * (this.tunnel.tunnelHeight - (2*marginFromTunnel)) + marginFromTunnel + this.tunnel.tunnelTop;
+Game.prototype.generateObstaclePosition = function(dimension, screenHeight){
+    return Math.random() * ((screenHeight/2 + this.tunnel.tunnelHeight/2 - dimension) - (screenHeight/2 - this.tunnel.tunnelHeight/2)) + (screenHeight/2 - this.tunnel.tunnelHeight/2);
 };
 
 Game.prototype.lastObstacle = function(){
@@ -51,6 +51,11 @@ Game.prototype.firstObstacle = function(){
     return this.obstacles[0];  
 };
 
+Game.prototype.debug = function(){
+    console.log("Tunnel Height :" + this.tunnel.tunnelHeight);
+    console.log("Min: " + this.tunnel.tunnelTop);
+    console.log("Max: " + 1*(this.tunnel.tunnelHeight - dimension));
+};
 
 
 

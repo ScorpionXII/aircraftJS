@@ -3,38 +3,45 @@ var divObstaclesArray = [];
 var keys = {};
 var intervalId = null;
 
-var fps = 1000/25; // Frames per Second: 1000ms / value : 1000/25 = 40fps
+var fps = 30; // Frames per Second
 
 var secondsBetweenObstacle = 1;
-var deltaObstaclesFPS = 0; //Calculated at checkToAddObstacle()
+var obstaclesTimeDelta = 0; //Calculated at checkToAddObstacle() related with time to deploy obstacle 
 
 var obstacleDimension = 0; //Initialized at init()
 
+var documentHeight = 0;
+
 function init(){
+    documentHeight = $(document).height();
+    
     var aircraft = new Aircraft($(".air-craft").position().top);
-    var tunnel = new Tunnel($(document).height() / 2 - ($(document).height() * 0.8 / 2), $(document).height() * 0.8);
+    var tunnel = new Tunnel(documentHeight, 0.8);
     game = new Game(aircraft, tunnel);
     
-    obstacleDimension = $(document).height() * 0.15;
+    obstacleDimension = documentHeight * 0.20;
       
     renderInitialTunnel();   
     intervalId = setInterval(render, 1000/fps);
 }
 
 function render(){
-    checkCollisions();
-    game.gameStep();
-    checkControls();
-    removeOldObstacles();
-    checkToAddObstacle();
-    renderTunnel();
-    renderElements();
-    renderScore();
+    if (!keys[8]){
+        checkCollisions();
+        game.gameStep();
+        checkControls();
+        removeOldObstacles();
+        checkToAddObstacle();
+        renderTunnel();
+        renderElements();
+        renderScore();
+    }
 }
 
 function renderScore(){
-    //$(".distance").html(game.getScoredPoints());
-    $(".distance").html(deltaObstaclesFPS);
+    $(".distance").html(game.getScoredPoints());
+    $(".distance").html(game.tunnel.tunnelTop);
+    //$(".ppp").css("top", documentHeight/2 + game.tunnel.tunnelHeight/2);
 }
 
 function renderElements(){
@@ -69,7 +76,7 @@ function randomDivHeight(min, max){
 }
 
 function checkControls(){
-    if(keys[32] || keys["mouseDown"])
+    if(keys[32])
         game.aircraft.isFalling = false;
     else
         game.aircraft.isFalling = true;        
@@ -81,13 +88,13 @@ function checkCollisions(){
         
      var heightToCheck = $('.way-container div:first-child').height();   
      
-     if ($(".air-craft").position().top < ($(document).height()/2 - heightToCheck/2) || $(".air-craft").position().top + 81 > ($(document).height()/2 + heightToCheck/2)) {     
+     if ($(".air-craft").position().top < (documentHeight/2 - heightToCheck/2) || $(".air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
         clearInterval(intervalId);
      }
 }
 
 function removeOldObstacles(){
-    if (divObstaclesArray[0] && divObstaclesArray[0].position().left < -200){
+    if (divObstaclesArray[0] && divObstaclesArray[0].position().left < -obstacleDimension){
         divObstaclesArray[0].remove();
         divObstaclesArray.shift();
         game.removeObstacle();   
@@ -95,8 +102,8 @@ function removeOldObstacles(){
 }
 
 function checkToAddObstacle(){
-    if (deltaObstaclesFPS <= 0){
-        var obstacleObject = game.createObstacle(obstacleDimension,10);
+    if (obstaclesTimeDelta <= 0){
+        var obstacleObject = game.createObstacle(obstacleDimension, 10, documentHeight);
         game.addObstacle(obstacleObject);
     
         var obstacleContainer = $('<div class="obstacle '+ obstacleObject.name +'" style="top:'+ game.lastObstacle().y +'px; width:'+ obstacleDimension +'px; height:'+ obstacleDimension +'px;"></div>');
@@ -104,9 +111,9 @@ function checkToAddObstacle(){
         divObstaclesArray.push(obstacleContainer);
         $(".wrapper").append(obstacleContainer);
         
-        deltaObstaclesFPS = secondsBetweenObstacle*fps;
+        obstaclesTimeDelta = secondsBetweenObstacle*1000/fps + obstacleDimension*0.05;
     } else
-        deltaObstaclesFPS--;
+        obstaclesTimeDelta--;
 }
 
 $(document).ready(function(){
@@ -118,7 +125,3 @@ $(document).keydown(function(e){
 }).keyup(function(e){
     delete keys[e.keyCode];
 });
-
-$(document).on("touchstart", function(e){
-        keys["mouseDown"] = true;
-    });
