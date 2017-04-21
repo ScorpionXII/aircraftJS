@@ -132,7 +132,7 @@ function checkToAddObstacle(){
 
 function animateStatsBlock(){
     $("#boom").css({ "visibility":"visible" });
-    $("#stats").css({ "top": documentHeight/2 - 150, "padding-top" : "100px", "padding-bottom" : "100px" });
+    $("#stats").css({ "top": documentHeight/2 - documentHeight*0.1 - 15, "padding-top" : "5%", "padding-bottom" : "5%" });
 }
 
 $(document).ready(function(){
