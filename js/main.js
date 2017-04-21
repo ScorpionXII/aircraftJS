@@ -94,6 +94,7 @@ function checkControls(){
 function checkCollisions(){
     if ($("#bounding-box").collision(".obstacle").length >  0) {
         $("#boom").css({ "visibility":"visible" });
+        $("#stats").css({ "top" : documentHeight/2 });
         clearInterval(intervalId);
     }
              
@@ -101,6 +102,7 @@ function checkCollisions(){
      
      if ($("#air-craft").position().top < (documentHeight/2 - heightToCheck/2) - 10 || $("#air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
         $("#boom").css({ "visibility":"visible" });
+        $("#stats").css({ "top" : documentHeight/2 });
         clearInterval(intervalId);        
      }
 }

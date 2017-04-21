@@ -13,7 +13,6 @@
 body {
     padding: 0;
     margin: 0;
-    transition: all 1s ease;
     font-family: "Press Start 2P";
     color: #FFFFFF;
 }
@@ -81,6 +80,7 @@ body {
 }
 
 #stats {
+    z-index: 3;
     position: absolute;
     top: 30px;
     left: 50%;
@@ -88,6 +88,8 @@ body {
     border-radius: 5px;
     transform: translate(-50%, 0);
     font-size: 30px;
+    
+    transition: all 2s ease 0s;
 }
 
 .obstacle { 
