@@ -92,13 +92,16 @@ function checkControls(){
 }
 
 function checkCollisions(){
-    if ($("#bounding-box").collision(".obstacle").length >  0)
+    if ($("#bounding-box").collision(".obstacle").length >  0) {
+        $("#boom").css({ "visibility":"visible" });
         clearInterval(intervalId);
-        
+    }
+             
      var heightToCheck = $('#way-container div:first-child').height();   
      
      if ($("#air-craft").position().top < (documentHeight/2 - heightToCheck/2) - 10 || $("#air-craft").position().top + 81 > (documentHeight/2 + heightToCheck/2)) {     
-        clearInterval(intervalId);
+        $("#boom").css({ "visibility":"visible" });
+        clearInterval(intervalId);        
      }
 }
 
@@ -120,13 +123,13 @@ function checkToAddObstacle(){
         divObstaclesArray.push(obstacleContainer);
         $("#game-wrapper").append(obstacleContainer);
         
-        obstaclesTimeDelta = secondsBetweenObstacle*1000/fps + obstacleDimension/10;
+        obstaclesTimeDelta = secondsBetweenObstacle*1000/fps + obstacleDimension/5;
     } else
         obstaclesTimeDelta--;
 }
 
 $(document).ready(function(){
-    intervalId = setInterval(startMenuLoop, 1000/fps);
+    intervalId = setInterval(startMenuLoop, 1000/(fps/2));
 });
 
 $(document).keydown(function(e){
