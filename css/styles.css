@@ -82,14 +82,19 @@ body {
 #stats {
     z-index: 3;
     position: absolute;
-    top: 30px;
+    padding: 0 100px;
+    top: 10px;
     left: 50%;
     width: auto;
     border-radius: 5px;
     transform: translate(-50%, 0);
-    font-size: 30px;
+    background-color: #385A8C;
     
     transition: all 2s ease 0s;
+}
+
+#stats h1{
+    font-size: 30px;
 }
 
 .obstacle { 
