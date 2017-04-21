@@ -10,7 +10,7 @@ var obstaclesTimeDelta = 0; //Calculated at checkToAddObstacle() related with ti
 
 var obstacleDimension = 0; //Initialized at init()
 
-var documentHeight = 0;
+var documentHeight = 0; //Initialized at init()
 
 function startMenuLoop(){
     if (keys[32]) {
@@ -51,8 +51,6 @@ function render(){
 
 function renderScore(){
     $("#distance").html(game.getScoredPoints());
-    $("#distance").html(game.tunnel.tunnelTop);
-    //$(".ppp").css("top", documentHeight/2 + game.tunnel.tunnelHeight/2);
 }
 
 function renderElements(){
