@@ -106,6 +106,10 @@ body {
     font-size: medium;
 }
 
+.btn:focus {
+    outline: none;
+}
+
 #stats button {
     margin-top: 20px;
     width: 200px;
@@ -181,4 +185,8 @@ body {
     width: 500px;
     min-width: 500px;
     height: 40px;
+}
+
+.credits {
+    margin-top: 50px;
 }

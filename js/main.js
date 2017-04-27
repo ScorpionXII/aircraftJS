@@ -12,6 +12,8 @@ var obstacleDimension = 0; //Initialized at init()
 
 var documentHeight = 0; //Initialized at init()
 
+var backAudioTrack = null;
+
 function startMenuLoop(){
     if (keys[32]) {
         clearInterval(intervalId);
@@ -27,6 +29,12 @@ function initGame(){
     var aircraft = new Aircraft($("#air-craft").position().top);
     var tunnel = new Tunnel(documentHeight, 0.8);
     game = new Game(aircraft, tunnel);
+
+    //backAudioTrack = new Audio('audio/a-journey-awaits.ogg');
+    backAudioTrack = new Audio('audio/metal-warrior.m4a');
+    backAudioTrack.volume = 0.5;
+    backAudioTrack.loop = true;
+    backAudioTrack.play();
     
     obstacleDimension = documentHeight * 0.20;
       
@@ -131,6 +139,11 @@ function checkToAddObstacle(){
 function animateStatsBlock(){
     $("#boom").css({ "visibility":"visible" });
     $("#stats").css({ "top": documentHeight/2 - documentHeight*0.1 - 15, "padding-top" : "5%", "padding-bottom" : "5%" });
+    $("#restart-btn").show();
+    $("#restart-btn").focus();
+    $("#restart-btn").on("click", function(){
+        location.reload();
+    });
 }
 
 $(document).ready(function(){
