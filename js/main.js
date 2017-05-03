@@ -140,7 +140,7 @@ function animateStatsBlock(){
     $("#boom").css({ "visibility":"visible" });
     $("#stats").css({ "top": documentHeight/2 - documentHeight*0.1 - 15, "padding-top" : "5%", "padding-bottom" : "5%" });
     $("#restart-btn").show();
-    $("#restart-btn").focus();
+    //$("#restart-btn").focus();
     $("#restart-btn").on("click", function(){
         location.reload();
     });
